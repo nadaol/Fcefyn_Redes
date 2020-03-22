@@ -6,67 +6,56 @@ sudo ip netns add h3
 sudo ip netns add h4
 sudo ip netns add r1
 sudo brctl addbr sw1
+sudo echo ns created
 # Create veth's links
-sudo ip link add name veth1 type veth peer name vpeer1
-sudo ip link add name veth2 type veth peer name vpeer2
-sudo ip link add name veth3 type veth peer name vpeer3
-sudo ip link add name veth4 type veth peer name vpeer4
-sudo ip link add name veth-router type veth peer name vpeer-router
+sudo ip link add name veth-h1-r1 type veth peer name veth-r1-h1
+sudo ip link add name veth-h2-sw type veth peer name veth-sw-h2
+sudo ip link add name veth-h3-sw type veth peer name veth-sw-h3
+sudo ip link add name veth-h4-sw type veth peer name veth-sw-h4
+sudo ip link add name veth-r1-sw type veth peer name veth-sw-r1
 
-sudo echo resources created
+sudo echo links created
 sudo sleep 0.1
 
-# Set peer's links up
-sudo ip link set veth1 up
-sudo ip link set veth2 up
-sudo ip link set veth3 up
-sudo ip link set veth4 up
-sudo ip link set veth-router up
+# Link interfaces to namespaces 
+sudo ip link set dev veth-h1-r1 netns h1
+sudo ip link set dev veth-h2-sw netns h2
+sudo ip link set dev veth-h3-sw netns h3
+sudo ip link set dev veth-h4-sw netns h4
+
+sudo ip link set dev veth-r1-sw netns r1
+sudo ip link set dev veth-r1-h1 netns r1
+
+sudo brctl addif sw1 veth-sw-h2
+sudo brctl addif sw1 veth-sw-h3
+sudo brctl addif sw1 veth-sw-h4
+sudo brctl addif sw1 veth-sw-r1
+
+sudo echo interfaces conected
+sudo sleep 0.1
+
+#Set link's up
+#sudo ip link set veth-r1-h1 up
+sudo ip link set veth-sw-h2 up
+sudo ip link set veth-sw-h3 up
+sudo ip link set veth-sw-h4 up
+
+#sudo ip link set veth-h1-r1 up
+sudo ip link set veth-sw-r1 up
+
 sudo ip link set sw1 up
-
 sudo echo links are up
-sudo sleep 0.1
-
-# Assign interfaces to namespaces 
-sudo ip link set dev vpeer1 netns h1
-sudo ip link set dev vpeer2 netns h2
-sudo ip link set dev vpeer3 netns h3
-sudo ip link set dev vpeer4 netns h4
-
-sudo ip link set dev vpeer-router netns r1
-sudo ip link set dev veth1 netns r1
-
-sudo echo interfaces assigned
-sudo sleep 0.1
-
-# Connect veth's to bridge  (3 hosts and router)
-sudo brctl addif sw1 veth2
-sudo brctl addif sw1 veth3
-sudo brctl addif sw1 veth4
-sudo brctl addif sw1 veth-router
-
-sudo echo switch interfaces conected
-sudo sleep 0.1
 
 # Configure router as router
-sudo ip netns exec r1 sysctl -w net.ipv6.conf.all.forwarding=1
+sudo ip netns exec r1 sysctl -w net.ipv4.conf.all.forwarding=1
 
 # Configure IP addresses
 #router interfaces
-sudo ip netns exec r1 ip addr add 192.168.2.12/24 dev vpeer-router
-sudo ip netns exec r1 ip addr add 192.168.1.11/24 dev veth1
-
-#hosts interfaces
-#sudo ip addr add 192.168.1.0/24 dev veth1
-#sudo ip addr add 192.168.2.0/24 dev veth2
-#sudo ip addr add 192.168.2.0/24 dev veth3
-#sudo ip addr add 192.168.2.0/24 dev veth4
-
+sudo ip netns exec r1 ip addr add 192.168.2.12/24 dev veth-r1-sw
+sudo ip netns exec r1 ip addr add 192.168.1.11/24 dev veth-r1-h1
 #hosts static ip's
-sudo ip netns exec h1 ip addr add 192.168.1.10/24 dev vpeer1
-#sudo ip netns exec h2 ip addr add 192.168.2.2/24 dev vpeer2
-#sudo ip netns exec h3 ip addr add 192.168.2.3/24 dev vpeer3
-sudo ip netns exec h4 ip addr add 192.168.2.4/24 dev vpeer4
+sudo ip netns exec h1 ip addr add 192.168.1.10/24 dev veth-h1-r1
+sudo ip netns exec h4 ip addr add 192.168.2.4/24 dev veth-h4-sw
 
 sudo echo ip addresses configured
 sudo sleep 0.1
@@ -78,30 +67,26 @@ sudo ip netns exec h3 ip link set lo up
 sudo ip netns exec h4 ip link set lo up
 sudo ip netns exec r1 ip link set lo up
 
-sudo ip netns exec h1 ip link set vpeer1 up
-sudo ip netns exec h2 ip link set vpeer2 up
-sudo ip netns exec h3 ip link set vpeer3 up
-sudo ip netns exec h4 ip link set vpeer4 up
-
-sudo ip netns exec r1 ip link set vpeer-router up
-sudo ip netns exec r1 ip link set veth1 up
+sudo ip netns exec h1 ip link set veth-h1-r1 up
+sudo ip netns exec h2 ip link set veth-h2-sw up
+sudo ip netns exec h3 ip link set veth-h3-sw up
+sudo ip netns exec h4 ip link set veth-h4-sw up
+sudo ip netns exec r1 ip link set veth-r1-sw up
+sudo ip netns exec r1 ip link set veth-r1-h1 up
 
 sudo echo interfaces are up
 sudo sleep 0.1
 
 #configure dhcp-server on host 4
-sudo ip netns exec h4 dnsmasq -F 192.168.2.0,192.168.2.254,255.255.255.0 -i vpeer4
+sudo ip netns exec h4 dnsmasq -F 192.168.2.0,192.168.2.254,255.255.255.0 -i veth-h4-sw
 sudo echo dhcp server on
 sudo sleep 0.1
+
+#host default gateways
+sudo ip netns exec h1 ip route add default via 192.168.1.11
+sudo ip netns exec h4 ip route add default via 192.168.2.12
 
 #start dhc-client's to listen to dhcp-server
 sudo ip netns exec h2 dhclient
 sudo ip netns exec h3 dhclient
 sudo echo dhcp clients ips assigned
-
-#host routes
-#sudo ip netns exec h1 ip route add default via 192.168.1.11
-#sudo ip netns exec h2 ip route add default via 192.168.2.12
-
-# Init router advertisement daemon
-#sudo ip netns exec r1 radvd -n
