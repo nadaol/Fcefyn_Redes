@@ -18,12 +18,12 @@ services:
       #ospf ipv6
       - 10013:2606
     networks:
-      nr1:
+      oam:
         ipv4_address: 192.168.12.1
-        ipv6_address: 2001:1::11
+        ipv6_address: 2001:11::11
       nr3:
         ipv4_address: 192.168.13.1
-        ipv6_address: 2001:3::11
+        ipv6_address: 2001:13::11
           
   r2:
     build: .
@@ -42,15 +42,15 @@ services:
       #ospf ipv6
       - 10023:2606
     networks:
-      nr1:
+      oam:
         ipv4_address: 192.168.12.2
-        ipv6_address: 2001:1::12
+        ipv6_address: 2001:11::12
       nr2:
         ipv4_address: 192.168.2.1
-        ipv6_address: 2001:2::11
+        ipv6_address: 2001:12::11
       nr4:
         ipv4_address: 192.168.23.1
-        ipv6_address: 2001:4::11  
+        ipv6_address: 2001:14::11  
   r3:
     build: .
     volumes:
@@ -70,16 +70,16 @@ services:
     networks:
       nr3:
         ipv4_address: 192.168.13.2
-        ipv6_address: 2001:3::12
+        ipv6_address: 2001:13::12
       nr4:
         ipv4_address: 192.168.23.2
-        ipv6_address: 2001:4::12
+        ipv6_address: 2001:14::12
       nr5:
         ipv4_address: 192.168.34.1
-        ipv6_address: 2001:5::11
+        ipv6_address: 2001:15::11
       nr6:
         ipv4_address: 192.168.35.1
-        ipv6_address: 2001:6::11  
+        ipv6_address: 2001:16::11  
         
   r4:
     build: .
@@ -100,13 +100,13 @@ services:
     networks:
       nr5:
         ipv4_address: 192.168.34.2
-        ipv6_address: 2001:5::12
+        ipv6_address: 2001:15::12
       nr7:
         ipv4_address: 192.168.4.1
-        ipv6_address: 2001:7::11
+        ipv6_address: 2001:17::11
       nr8:
         ipv4_address: 192.168.45.1
-        ipv6_address: 2001:8::11  
+        ipv6_address: 2001:18::11  
 
   r5:
     build: .
@@ -127,23 +127,23 @@ services:
     networks:
       nr6:
         ipv4_address: 192.168.35.2
-        ipv6_address: 2001:6::12
+        ipv6_address: 2001:16::12
       nr8:
         ipv4_address: 192.168.45.2
-        ipv6_address: 2001:8::12
+        ipv6_address: 2001:18::12
       nr9:
         ipv4_address: 192.168.5.1
-        ipv6_address: 2001:3::11  
+        ipv6_address: 2001:13::11  
 
 networks:
-  nr1:
+  oam:
     driver: "bridge"
     enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: 192.168.12.0/24
-        - subnet: 2001:1::/64
+        - subnet: 2001:11::/64
   nr2:
     driver: "bridge"
     enable_ipv6: true
@@ -151,7 +151,7 @@ networks:
       driver: default
       config:
         - subnet: 192.168.2.0/24
-        - subnet: 2001:2::/64
+        - subnet: 2001:12::/64
   nr3:
     driver: "bridge"
     enable_ipv6: true
@@ -159,7 +159,7 @@ networks:
       driver: default
       config:
         - subnet: 192.168.13.0/24
-        - subnet: 2001:3::/64
+        - subnet: 2001:13::/64
   nr4:
     driver: "bridge"
     enable_ipv6: true
@@ -167,7 +167,7 @@ networks:
       driver: default
       config:
         - subnet: 192.168.23.0/24
-        - subnet: 2001:4::/64
+        - subnet: 2001:14::/64
   nr5:
     driver: "bridge"
     enable_ipv6: true
@@ -175,7 +175,7 @@ networks:
       driver: default
       config:
         - subnet: 192.168.34.0/24
-        - subnet: 2001:5::/64
+        - subnet: 2001:15::/64
   nr6:
     driver: "bridge"
     enable_ipv6: true
@@ -183,7 +183,7 @@ networks:
       driver: default
       config:
         - subnet: 192.168.35.0/24
-        - subnet: 2001:6::/64
+        - subnet: 2001:16::/64
   nr7:
     driver: "bridge"
     enable_ipv6: true
@@ -191,7 +191,7 @@ networks:
       driver: default
       config:
         - subnet: 192.168.4.0/24
-        - subnet: 2001:7::/64
+        - subnet: 2001:17::/64
   nr8:
     driver: "bridge"
     enable_ipv6: true
@@ -199,7 +199,7 @@ networks:
       driver: default
       config:
         - subnet: 192.168.45.0/24
-        - subnet: 2001:8::/64
+        - subnet: 2001:18::/64
   nr9:
     driver: "bridge"
     enable_ipv6: true
@@ -207,5 +207,5 @@ networks:
       driver: default
       config:
         - subnet: 192.168.5.0/24
-        - subnet: 2001:9::/64
+        - subnet: 2001:19::/64
 

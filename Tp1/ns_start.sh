@@ -34,13 +34,11 @@ sudo brctl addif sw1 veth-sw-r1
 sudo echo interfaces conected
 sudo sleep 0.1
 
-#Set link's up
-#sudo ip link set veth-r1-h1 up
+#Set switch link's up
+
 sudo ip link set veth-sw-h2 up
 sudo ip link set veth-sw-h3 up
 sudo ip link set veth-sw-h4 up
-
-#sudo ip link set veth-h1-r1 up
 sudo ip link set veth-sw-r1 up
 
 sudo ip link set sw1 up
@@ -77,16 +75,20 @@ sudo ip netns exec r1 ip link set veth-r1-h1 up
 sudo echo interfaces are up
 sudo sleep 0.1
 
-#configure dhcp-server on host 4
-sudo ip netns exec h4 dnsmasq -F 192.168.2.0,192.168.2.254,255.255.255.0 -i veth-h4-sw
-sudo echo dhcp server on
-sudo sleep 0.1
-
 #host default gateways
 sudo ip netns exec h1 ip route add default via 192.168.1.11
 sudo ip netns exec h4 ip route add default via 192.168.2.12
 
+#configure dhcp-server on host 4
+#sudo ip netns exec h4 dnsmasq -F 192.168.2.0,192.168.2.254,255.255.255.0 -i veth-h4-sw
+sudo chown root:root /var/lib/dhcp/dhcpd.leases
+sudo chown root:root /var/lib/dhcp /var/lib/dhcp/dhcpd.leases
+sleep 5s
+
+sudo ip netns exec h4 dhcpd -user dhcpd -group dhcpd -4 -cf /etc/dhcp/dhcpd.conf veth-h4-sw
+sudo echo dhcp server on
+sudo sleep 0.1
+
 #start dhc-client's to listen to dhcp-server
-sudo ip netns exec h2 dhclient
-sudo ip netns exec h3 dhclient
-sudo echo dhcp clients ips assigned
+sudo ip netns exec h2 dhclient -4 -nw
+sudo ip netns exec h3 dhclient -4 -d
