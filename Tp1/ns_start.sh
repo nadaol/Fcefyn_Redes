@@ -76,8 +76,8 @@ sudo echo interfaces are up
 sudo sleep 0.1
 
 #host default gateways
-#sudo ip netns exec h1 ip route add default via 192.168.1.11
-#sudo ip netns exec h4 ip route add default via 192.168.2.12
+sudo ip netns exec h1 ip route add default via 192.168.1.11
+sudo ip netns exec h4 ip route add default via 192.168.2.12
 
 #configure dhcp-server on host 4
 sudo chown root:root /var/lib/dhcp/dhcpd.leases
