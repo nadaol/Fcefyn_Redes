@@ -80,14 +80,14 @@ sudo ip netns exec h1 ip route add default via 192.168.1.11
 sudo ip netns exec h4 ip route add default via 192.168.2.12
 
 #configure dhcp-server on host 4
-sudo chown root:root /var/lib/dhcp/dhcpd.leases
-sudo chown root:root /var/lib/dhcp /var/lib/dhcp/dhcpd.leases
-sleep 5s
+#sudo chown root:root /var/lib/dhcp/dhcpd.leases
+#sudo chown root:root /var/lib/dhcp /var/lib/dhcp/dhcpd.leases
+#sleep 5s
 
-sudo ip netns exec h4 dhcpd -user dhcpd -group dhcpd -4 -cf /etc/dhcp/dhcpd.conf veth-h4-sw
-sudo echo dhcp server on
-sudo sleep 0.1
+#sudo ip netns exec h4 dhcpd -user dhcpd -group dhcpd -4 -cf /etc/dhcp/dhcpd.conf veth-h4-sw
+#sudo echo dhcp server on
+#sudo sleep 0.1
 
 #start dhc-clients to listen to dhcp-server
-sudo ip netns exec h2 dhclient -4 -nw
-sudo ip netns exec h3 dhclient -4 -d
+#sudo ip netns exec h2 dhclient -4 -nw
+#sudo ip netns exec h3 dhclient -4 -d'
