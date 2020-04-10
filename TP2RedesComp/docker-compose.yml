@@ -8,7 +8,7 @@ services:
       - ./volumes/quagga/r1/ospfd.conf:/etc/quagga/ospfd.conf:ro
       - ./volumes/quagga/r1/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
       - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
-    image: ospf:20190321
+    image: alpine_quagga:1.0
     privileged: true
     ports:
       #admin
@@ -30,7 +30,7 @@ services:
       - ./volumes/quagga/r2/ospfd.conf:/etc/quagga/ospfd.conf:ro
       - ./volumes/quagga/r2/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
       - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
-    image: ospf:20190321
+    image: alpine_quagga:1.0
     privileged: true
     ports:
       #admin
@@ -53,7 +53,7 @@ services:
       - ./volumes/quagga/r3/ospfd.conf:/etc/quagga/ospfd.conf:ro
       - ./volumes/quagga/r3/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
       - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
-    image: ospf:20190321
+    image: alpine_quagga:1.0
     privileged: true
     ports:
       #admin
@@ -79,7 +79,7 @@ services:
       - ./volumes/quagga/r4/ospfd.conf:/etc/quagga/ospfd.conf:ro
       - ./volumes/quagga/r4/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
       - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
-    image: ospf:20190321
+    image: alpine_quagga:1.0
     privileged: true
     ports:
       #admin
@@ -103,7 +103,7 @@ services:
       - ./volumes/quagga/r5/ospfd.conf:/etc/quagga/ospfd.conf:ro
       - ./volumes/quagga/r5/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
       - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
-    image: ospf:20190321
+    image: alpine_quagga:1.0
     privileged: true
     ports:
       #admin
