@@ -2,7 +2,7 @@
 #
 # VERSION 0.0.2
 
-FROM alpine
+FROM alpine:3.11.5
 
 LABEL maintainer.name="Nahuel Oliva - Cancinos Jose" \
       maintainer.email="nadaol@hotmail.com" \
