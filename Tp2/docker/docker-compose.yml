@@ -18,12 +18,10 @@ services:
       #ospf ipv6
       - 10013:2606
     networks:
-      oam:
-        ipv4_address: 192.168.12.1
-        ipv6_address: 2001:11::11
-      nr3:
-        ipv4_address: 192.168.13.1
-        ipv6_address: 2001:13::11
+      nr1r2:
+        ipv4_address: 192.168.11.11
+      nr1r3:
+        ipv4_address: 192.168.13.11
           
   r2:
     build: .
@@ -42,15 +40,12 @@ services:
       #ospf ipv6
       - 10023:2606
     networks:
-      oam:
-        ipv4_address: 192.168.12.2
-        ipv6_address: 2001:11::12
-      nr2:
-        ipv4_address: 192.168.2.1
-        ipv6_address: 2001:12::11
-      nr4:
-        ipv4_address: 192.168.23.1
-        ipv6_address: 2001:14::11  
+      nr1r2:
+        ipv4_address: 192.168.11.12
+      nr2r3:
+        ipv4_address: 192.168.12.11
+      nr2sw1:
+        ipv4_address: 192.168.22.10
   r3:
     build: .
     volumes:
@@ -68,18 +63,14 @@ services:
       #ospf ipv6
       - 10033:2606
     networks:
-      nr3:
-        ipv4_address: 192.168.13.2
-        ipv6_address: 2001:13::12
-      nr4:
-        ipv4_address: 192.168.23.2
-        ipv6_address: 2001:14::12
-      nr5:
-        ipv4_address: 192.168.34.1
-        ipv6_address: 2001:15::11
-      nr6:
-        ipv4_address: 192.168.35.1
-        ipv6_address: 2001:16::11  
+      nr1r3:
+        ipv4_address: 192.168.13.12
+      nr2r3:
+        ipv4_address: 192.168.12.12
+      nr3r4:
+        ipv4_address: 192.168.14.11
+      nr3r5:
+        ipv4_address: 192.168.15.12
         
   r4:
     build: .
@@ -98,15 +89,12 @@ services:
       #ospf ipv6
       - 10043:2606
     networks:
-      nr5:
-        ipv4_address: 192.168.34.2
-        ipv6_address: 2001:15::12
-      nr7:
-        ipv4_address: 192.168.4.1
-        ipv6_address: 2001:17::11
-      nr8:
-        ipv4_address: 192.168.45.1
-        ipv6_address: 2001:18::11  
+      nr3r4:
+        ipv4_address: 192.168.14.12
+      nr4r5:
+        ipv4_address: 192.168.16.11
+      nh4r4:
+        ipv4_address: 192.168.24.11
 
   r5:
     build: .
@@ -125,87 +113,108 @@ services:
       #ospf ipv6
       - 10053:2606
     networks:
-      nr6:
-        ipv4_address: 192.168.35.2
-        ipv6_address: 2001:16::12
-      nr8:
-        ipv4_address: 192.168.45.2
-        ipv6_address: 2001:18::12
-      nr9:
-        ipv4_address: 192.168.5.1
-        ipv6_address: 2001:13::11  
+      nr3r5:
+        ipv4_address: 192.168.15.11
+      nr4r5:
+        ipv4_address: 192.168.16.12
+      nh5r5:
+        ipv4_address: 192.168.25.11
+  
+  h1:
+    image: alpine:latest
+    privileged: true
+    command: top
+    networks:
+      nr2sw1:
+        ipv4_address: 192.168.22.11
+
+  h2:
+    image: alpine:latest
+    privileged: true
+    command: top
+    networks:
+      nr2sw1:
+        ipv4_address: 192.168.22.12
+
+  h3:
+    image: alpine:latest
+    privileged: true
+    command: top
+    networks:
+      nr2sw1:
+        ipv4_address: 192.168.22.13
+
+  h4:
+    image: alpine:latest
+    privileged: true
+    command: top
+    networks:
+      nh4r4:
+        ipv4_address: 192.168.24.12
+
+  h5:
+    image: alpine:latest
+    privileged: true
+    command: top
+    networks:
+      nh5r5:
+        ipv4_address: 192.168.25.12
 
 networks:
-  oam:
+  nr1r2:
     driver: "bridge"
-    enable_ipv6: true
     ipam:
       driver: default
       config:
-        - subnet: 192.168.12.0/24
-        - subnet: 2001:11::/64
-  nr2:
+        - subnet: 192.168.11.0/24
+  nr1r3:
     driver: "bridge"
-    enable_ipv6: true
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.2.0/24
-        - subnet: 2001:12::/64
-  nr3:
-    driver: "bridge"
-    enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: 192.168.13.0/24
-        - subnet: 2001:13::/64
-  nr4:
+  nr2r3:
     driver: "bridge"
-    enable_ipv6: true
     ipam:
       driver: default
       config:
-        - subnet: 192.168.23.0/24
-        - subnet: 2001:14::/64
-  nr5:
+        - subnet: 192.168.12.0/24
+  nr2sw1:
     driver: "bridge"
-    enable_ipv6: true
     ipam:
       driver: default
       config:
-        - subnet: 192.168.34.0/24
-        - subnet: 2001:15::/64
-  nr6:
+        - subnet: 192.168.22.0/24
+
+  nr3r4:
     driver: "bridge"
-    enable_ipv6: true
     ipam:
       driver: default
       config:
-        - subnet: 192.168.35.0/24
-        - subnet: 2001:16::/64
-  nr7:
+        - subnet: 192.168.14.0/24
+  nr3r5:
     driver: "bridge"
-    enable_ipv6: true
     ipam:
       driver: default
       config:
-        - subnet: 192.168.4.0/24
-        - subnet: 2001:17::/64
-  nr8:
+        - subnet: 192.168.15.0/24
+  nr4r5:
     driver: "bridge"
-    enable_ipv6: true
     ipam:
       driver: default
       config:
-        - subnet: 192.168.45.0/24
-        - subnet: 2001:18::/64
-  nr9:
+        - subnet: 192.168.16.0/24
+  nh4r4:
     driver: "bridge"
-    enable_ipv6: true
     ipam:
       driver: default
       config:
-        - subnet: 192.168.5.0/24
-        - subnet: 2001:19::/64
+        - subnet: 192.168.24.0/24
+
+  nh5r5:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.25.0/24
 
