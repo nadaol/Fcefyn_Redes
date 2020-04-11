@@ -122,6 +122,7 @@ services:
   
   h1:
     image: alpine:latest
+    privileged: true
     command: top
     networks:
       nr2sw1:
@@ -129,6 +130,7 @@ services:
 
   h2:
     image: alpine:latest
+    privileged: true
     command: top
     networks:
       nr2sw1:
@@ -136,6 +138,7 @@ services:
 
   h3:
     image: alpine:latest
+    privileged: true
     command: top
     networks:
       nr2sw1:
@@ -143,6 +146,7 @@ services:
 
   h4:
     image: alpine:latest
+    privileged: true
     command: top
     networks:
       nh4r4:
@@ -150,6 +154,7 @@ services:
 
   h5:
     image: alpine:latest
+    privileged: true
     command: top
     networks:
       nh5r5:
