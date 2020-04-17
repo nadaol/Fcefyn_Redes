@@ -1,0 +1,220 @@
+version: '2.1'
+
+services:
+
+  r1:
+    build: .
+    volumes:
+      - ./volumes/quagga/r1/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./volumes/quagga/r1/ospfd.conf:/etc/quagga/ospfd.conf:ro
+      - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine_quagga:1.0
+    privileged: true
+    ports:
+      #admin
+      - 10011:2601
+      #ospf
+      - 10012:2604
+      #ospf ipv6
+      - 10013:2606
+    networks:
+      nr1r5:
+        ipv4_address: 192.168.13.12
+      nr1r4:
+        ipv4_address: 192.168.12.12
+      nr1r3:
+        ipv4_address: 192.168.14.11
+      nr1r2:
+        ipv4_address: 192.168.15.12
+
+  r2:
+    build: .
+    volumes:
+      - ./volumes/quagga/r2/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./volumes/quagga/r2/ospfd.conf:/etc/quagga/ospfd.conf:ro
+      - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine_quagga:1.0
+    privileged: true
+    ports:
+      #admin
+      - 10021:2601
+      #ospf
+      - 10022:2604
+      #ospf ipv6
+      - 10023:2606
+    networks:
+      nr1r2:
+        ipv4_address: 192.168.15.11
+      nr2r3:
+        ipv4_address: 192.168.16.12
+      nwsr2:
+        ipv4_address: 192.168.25.11
+        
+  r3:
+    build: .
+    volumes:
+      - ./volumes/quagga/r3/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./volumes/quagga/r3/ospfd.conf:/etc/quagga/ospfd.conf:ro
+      - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine_quagga:1.0
+    privileged: true
+    ports:
+      #admin
+      - 10031:2601
+      #ospf
+      - 10032:2604
+      #ospf ipv6
+      - 10033:2606
+    networks:
+      nr1r3:
+        ipv4_address: 192.168.14.12
+      nr2r3:
+        ipv4_address: 192.168.16.11
+      nh1r3:
+        ipv4_address: 192.168.24.11
+  
+  r4:
+    build: .
+    volumes:
+      - ./volumes/quagga/r4/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./volumes/quagga/r4/ospfd.conf:/etc/quagga/ospfd.conf:ro
+      - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine_quagga:1.0
+    privileged: true
+    ports:
+      #admin
+      - 10041:2601
+      #ospf
+      - 10042:2604
+      #ospf ipv6
+      - 10043:2606
+    networks:
+      nr4r5:
+        ipv4_address: 192.168.11.12
+      nr1r4:
+        ipv4_address: 192.168.12.11
+      nh2r4:
+        ipv4_address: 192.168.22.10
+
+  r5:
+    build: .
+    volumes:
+      - ./volumes/quagga/r5/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./volumes/quagga/r5/ospfd.conf:/etc/quagga/ospfd.conf:ro
+      - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine_quagga:1.0
+    privileged: true
+    ports:
+      #admin
+      - 10051:2601
+      #ospf
+      - 10052:2604
+      #ospf ipv6
+      - 10053:2606
+    networks:
+      nr4r5:
+        ipv4_address: 192.168.11.11
+      nr1r5:
+        ipv4_address: 192.168.13.11
+      nh3r5:
+        ipv4_address: 192.168.23.11
+
+  h1:
+    image: alpine:latest
+    command: top
+    networks:
+      nh1r3:
+        ipv4_address: 192.168.24.12
+
+  h2:
+    image: alpine:latest
+    command: top
+    networks:
+      nh2r4:
+        ipv4_address: 192.168.22.12
+
+  h3:
+    image: alpine:latest
+    command: top
+    networks:
+      nh3r5:
+        ipv4_address: 192.168.23.12
+
+  ws:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./volumes/ws/www/:/usr/share/nginx/html:ro
+    environment: 
+      - NGINX_HOST=
+      - NGINX_PORT=80
+    networks:
+      nwsr2:
+        ipv4_address: 192.168.25.12
+
+networks:
+  nr4r5:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.11.0/24
+  nr1r5:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.13.0/24
+  nr1r4:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.12.0/24
+  nh2r4:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.22.0/24
+
+  nr1r3:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.14.0/24
+  nr1r2:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.15.0/24
+  nr2r3:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.16.0/24
+  nh1r3:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.24.0/24
+
+  nwsr2:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.25.0/24
+
+  nh3r5:
+    driver: "bridge"
+    ipam:
+      driver: "default"
+      config: 
+        - subnet: 192.168.23.0/24
+
