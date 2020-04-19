@@ -3,12 +3,13 @@ version: '2.1'
 services:
 
   r1:
-    build: .
+    build: ./images/bgp_ospf/.
     volumes:
-      - ./volumes/quagga/r1/zebra.conf:/etc/quagga/zebra.conf:ro
-      - ./volumes/quagga/r1/ospfd.conf:/etc/quagga/ospfd.conf:ro
-      - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
-    image: alpine_quagga:1.0
+      - ./volumes/bgp_ospf/r1/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./volumes/bgp_ospf/r1/ospfd.conf:/etc/quagga/ospfd.conf:ro
+      - ./volumes/bgp_ospf/r1/bgpd.conf:/etc/quagga/bgpd.conf:ro
+      - ./volumes/bgp_ospf/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine-quagga-ospf-bgp:1.0
     privileged: true
     ports:
       #admin
@@ -17,6 +18,8 @@ services:
       - 10012:2604
       #ospf ipv6
       - 10013:2606
+      #bgp
+      - 10014:2605
     networks:
       nr1r5:
         ipv4_address: 192.168.13.12
@@ -28,12 +31,13 @@ services:
         ipv4_address: 192.168.15.12
 
   r2:
-    build: .
+    build: ./images/ospf/.
     volumes:
-      - ./volumes/quagga/r2/zebra.conf:/etc/quagga/zebra.conf:ro
-      - ./volumes/quagga/r2/ospfd.conf:/etc/quagga/ospfd.conf:ro
-      - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
-    image: alpine_quagga:1.0
+      - ./volumes/ospf/r2/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./volumes/ospf/r2/ospfd.conf:/etc/quagga/ospfd.conf:ro
+      - ./volumes/ospf/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine-quagga-ospf:1.0
+    command: /usr/bin/supervisord
     privileged: true
     ports:
       #admin
@@ -51,12 +55,13 @@ services:
         ipv4_address: 192.168.25.11
         
   r3:
-    build: .
+    build: ./images/ospf/.
     volumes:
-      - ./volumes/quagga/r3/zebra.conf:/etc/quagga/zebra.conf:ro
-      - ./volumes/quagga/r3/ospfd.conf:/etc/quagga/ospfd.conf:ro
-      - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
-    image: alpine_quagga:1.0
+      - ./volumes/ospf/r3/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./volumes/ospf/r3/ospfd.conf:/etc/quagga/ospfd.conf:ro
+      - ./volumes/ospf/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine-quagga-ospf:1.0
+    command: /usr/bin/supervisord
     privileged: true
     ports:
       #admin
@@ -74,12 +79,12 @@ services:
         ipv4_address: 192.168.24.11
   
   r4:
-    build: .
+    build: ./images/bgp/.
     volumes:
-      - ./volumes/quagga/r4/zebra.conf:/etc/quagga/zebra.conf:ro
-      - ./volumes/quagga/r4/ospfd.conf:/etc/quagga/ospfd.conf:ro
-      - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
-    image: alpine_quagga:1.0
+      - ./volumes/bgp/r4/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./volumes/bgp/r4/bgpd.conf:/etc/quagga/bgpd.conf:ro
+      - ./volumes/bgp/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine-quagga-ospf-bgp:1.0
     privileged: true
     ports:
       #admin
@@ -88,6 +93,8 @@ services:
       - 10042:2604
       #ospf ipv6
       - 10043:2606
+      #bgp
+      - 10044:2605      
     networks:
       nr4r5:
         ipv4_address: 192.168.11.12
@@ -97,12 +104,12 @@ services:
         ipv4_address: 192.168.22.10
 
   r5:
-    build: .
+    build: ./images/bgp/.
     volumes:
-      - ./volumes/quagga/r5/zebra.conf:/etc/quagga/zebra.conf:ro
-      - ./volumes/quagga/r5/ospfd.conf:/etc/quagga/ospfd.conf:ro
-      - ./volumes/supervisord.conf:/etc/supervisord.conf:ro
-    image: alpine_quagga:1.0
+      - ./volumes/bgp/r5/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./volumes/bgp/r5/bgpd.conf:/etc/quagga/bgpd.conf:ro
+      - ./volumes/bgp/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine-quagga-ospf-bgp:1.0
     privileged: true
     ports:
       #admin
@@ -111,6 +118,8 @@ services:
       - 10052:2604
       #ospf ipv6
       - 10053:2606
+      #bgp
+      - 10054:2605
     networks:
       nr4r5:
         ipv4_address: 192.168.11.11
@@ -141,7 +150,8 @@ services:
         ipv4_address: 192.168.23.12
 
   ws:
-    image: nginx
+    build: ./images/ws/.
+    image: alpine-nginx:1.0
     ports:
       - "8080:80"
     volumes:
