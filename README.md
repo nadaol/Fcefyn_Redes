@@ -9,4 +9,6 @@
 
 [TP 3: Ruteo externo dinámico](https://docs.google.com/document/d/1OrTF1JmSYKYR8QrADXPNAeeiF7q8jBnrOyADIlgl49k/edit)
 
+<a href="https://docs.google.com/document/d/1OrTF1JmSYKYR8QrADXPNAeeiF7q8jBnrOyADIlgl49k/edit" target="_blank">TP 3: Ruteo externo dinámico</a>
+
 <img src="https://github.com/nadaol/Fcefyn_Redes/blob/master/Tp3/topologia.png" width="600">
