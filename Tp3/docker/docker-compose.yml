@@ -40,7 +40,7 @@ services:
     volumes:
       - ./volumes/ospf/r2/zebra.conf:/etc/quagga/zebra.conf:ro
       - ./volumes/ospf/r2/ospfd.conf:/etc/quagga/ospfd.conf:ro
-      - ./volumes/bgp_ospf/r1/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
+      - ./volumes/ospf/r2/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
       - ./volumes/ospf/supervisord.conf:/etc/supervisord.conf:ro
     image: alpine-quagga-ospf:1.0
     command: /usr/bin/supervisord
@@ -68,7 +68,7 @@ services:
     volumes:
       - ./volumes/ospf/r3/zebra.conf:/etc/quagga/zebra.conf:ro
       - ./volumes/ospf/r3/ospfd.conf:/etc/quagga/ospfd.conf:ro
-      - ./volumes/bgp_ospf/r1/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
+      - ./volumes/ospf/r3/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
       - ./volumes/ospf/supervisord.conf:/etc/supervisord.conf:ro
     image: alpine-quagga-ospf:1.0
     command: /usr/bin/supervisord
@@ -230,6 +230,7 @@ networks:
         - subnet: 2001:15::/64
   nr2r3:
     driver: "bridge"
+    enable_ipv6: true
     ipam:
       driver: default
       config:
