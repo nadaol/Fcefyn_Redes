@@ -33,6 +33,6 @@ sudo docker exec -ti --privileged docker_r4_1 ip route add default via 192.168.1
 
 #R5 :para no tener que redistribuir ospf a bgp agrego ruta estatica para el trafico de AS103 hacia AS101
 sudo docker exec -ti --privileged docker_r5_1 ip route del default
-#sudo docker exec -ti --privileged docker_r5_1 ip route add default via 192.168.13.12 dev eth2
-sudo docker exec -ti --privileged docker_r5_1 ip route add default via 192.168.11.12 dev eth2
+sudo docker exec -ti --privileged docker_r5_1 ip route add default via 192.168.13.12 dev eth1
+#sudo docker exec -ti --privileged docker_r5_1 ip route add default via 192.168.11.12 dev eth2
 exit

@@ -7,6 +7,7 @@ services:
     volumes:
       - ./volumes/bgp_ospf/r1/zebra.conf:/etc/quagga/zebra.conf:ro
       - ./volumes/bgp_ospf/r1/ospfd.conf:/etc/quagga/ospfd.conf:ro
+      - ./volumes/bgp_ospf/r1/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
       - ./volumes/bgp_ospf/r1/bgpd.conf:/etc/quagga/bgpd.conf:ro
       - ./volumes/bgp_ospf/supervisord.conf:/etc/supervisord.conf:ro
     image: alpine-quagga-ospf-bgp:1.0
@@ -23,18 +24,23 @@ services:
     networks:
       nr1r5:
         ipv4_address: 192.168.13.12
+        ipv6_address: 2001:13::12
       nr1r4:
         ipv4_address: 192.168.12.12
+        ipv6_address: 2001:12::12
       nr1r3:
         ipv4_address: 192.168.14.11
+        ipv6_address: 2001:14::11
       nr1r2:
         ipv4_address: 192.168.15.12
+        ipv6_address: 2001:15::12
 
   r2:
     build: ./images/ospf/.
     volumes:
       - ./volumes/ospf/r2/zebra.conf:/etc/quagga/zebra.conf:ro
       - ./volumes/ospf/r2/ospfd.conf:/etc/quagga/ospfd.conf:ro
+      - ./volumes/bgp_ospf/r1/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
       - ./volumes/ospf/supervisord.conf:/etc/supervisord.conf:ro
     image: alpine-quagga-ospf:1.0
     command: /usr/bin/supervisord
@@ -49,16 +55,20 @@ services:
     networks:
       nr1r2:
         ipv4_address: 192.168.15.11
+        ipv6_address: 2001:15::11
       nr2r3:
         ipv4_address: 192.168.16.12
+        ipv6_address: 2001:16::12
       nwsr2:
         ipv4_address: 192.168.25.11
+        ipv6_address: 2001:25::11
         
   r3:
     build: ./images/ospf/.
     volumes:
       - ./volumes/ospf/r3/zebra.conf:/etc/quagga/zebra.conf:ro
       - ./volumes/ospf/r3/ospfd.conf:/etc/quagga/ospfd.conf:ro
+      - ./volumes/bgp_ospf/r1/ospf6d.conf:/etc/quagga/ospf6d.conf:ro
       - ./volumes/ospf/supervisord.conf:/etc/supervisord.conf:ro
     image: alpine-quagga-ospf:1.0
     command: /usr/bin/supervisord
@@ -73,10 +83,13 @@ services:
     networks:
       nr1r3:
         ipv4_address: 192.168.14.12
+        ipv6_address: 2001:14::12
       nr2r3:
         ipv4_address: 192.168.16.11
+        ipv6_address: 2001:16::11
       nh1r3:
         ipv4_address: 192.168.24.11
+        ipv6_address: 2001:24::11
   
   r4:
     build: ./images/bgp/.
@@ -89,19 +102,18 @@ services:
     ports:
       #admin
       - 10041:2601
-      #ospf
-      - 10042:2604
-      #ospf ipv6
-      - 10043:2606
       #bgp
       - 10044:2605      
     networks:
       nr4r5:
         ipv4_address: 192.168.11.12
+        ipv6_address: 2001:11::12
       nr1r4:
         ipv4_address: 192.168.12.11
+        ipv6_address: 2001:12::11
       nh2r4:
         ipv4_address: 192.168.22.10
+        ipv6_address: 2001:22::10
 
   r5:
     build: ./images/bgp/.
@@ -114,19 +126,18 @@ services:
     ports:
       #admin
       - 10051:2601
-      #ospf
-      - 10052:2604
-      #ospf ipv6
-      - 10053:2606
       #bgp
       - 10054:2605
     networks:
       nr4r5:
         ipv4_address: 192.168.11.11
+        ipv6_address: 2001:11::11
       nr1r5:
         ipv4_address: 192.168.13.11
+        ipv6_address: 2001:13::11
       nh3r5:
         ipv4_address: 192.168.23.11
+        ipv6_address: 2001:23::11
 
   h1:
     image: alpine:latest
@@ -134,6 +145,7 @@ services:
     networks:
       nh1r3:
         ipv4_address: 192.168.24.12
+        ipv6_address: 2001:24::12
 
   h2:
     image: alpine:latest
@@ -141,6 +153,7 @@ services:
     networks:
       nh2r4:
         ipv4_address: 192.168.22.12
+        ipv6_address: 2001:22::12
 
   h3:
     image: alpine:latest
@@ -148,6 +161,7 @@ services:
     networks:
       nh3r5:
         ipv4_address: 192.168.23.12
+        ipv6_address: 2001:23::12
 
   ws:
     build: ./images/ws/.
@@ -162,69 +176,89 @@ services:
     networks:
       nwsr2:
         ipv4_address: 192.168.25.12
+        ipv6_address: 2001:25::12
 
 networks:
   nr4r5:
     driver: "bridge"
+    enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: 192.168.11.0/24
+        - subnet: 2001:11::/64
   nr1r5:
     driver: "bridge"
+    enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: 192.168.13.0/24
+        - subnet: 2001:13::/64
   nr1r4:
     driver: "bridge"
+    enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: 192.168.12.0/24
+        - subnet: 2001:12::/64
   nh2r4:
     driver: "bridge"
+    enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: 192.168.22.0/24
+        - subnet: 2001:22::/64
 
   nr1r3:
     driver: "bridge"
+    enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: 192.168.14.0/24
+        - subnet: 2001:14::/64
   nr1r2:
     driver: "bridge"
+    enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: 192.168.15.0/24
+        - subnet: 2001:15::/64
   nr2r3:
     driver: "bridge"
     ipam:
       driver: default
       config:
         - subnet: 192.168.16.0/24
+        - subnet: 2001:16::/64
   nh1r3:
     driver: "bridge"
+    enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: 192.168.24.0/24
+        - subnet: 2001:24::/64
 
   nwsr2:
     driver: "bridge"
+    enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: 192.168.25.0/24
+        - subnet: 2001:25::/64
 
   nh3r5:
     driver: "bridge"
+    enable_ipv6: true
     ipam:
       driver: "default"
       config: 
         - subnet: 192.168.23.0/24
+        - subnet: 2001:23::/64
 

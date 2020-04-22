@@ -10,7 +10,7 @@ LABEL maintainer.name="Nahuel Oliva - Cancinos Jose" \
 
 RUN apk update
 RUN apk add supervisor quagga heimdal tcpdump
-# RUN echo "ospfd6=yes" >> /etc/quagga/daemons
+RUN echo "ospfd6=yes" >> /etc/quagga/daemons
 RUN echo "bgpd=yes" > /etc/quagga/daemons
 RUN echo "ospfd=yes" >> /etc/quagga/daemons
 RUN echo "zebra=yes" >> /etc/quagga/daemons
