@@ -166,10 +166,11 @@ services:
   ws:
     build: ./images/ws/.
     image: alpine-nginx:1.0
-    ports:
-      - "8080:80"
+    expose:
+      - "80"
     volumes:
       - ./volumes/ws/www/:/usr/share/nginx/html:ro
+      - ./volumes/ws/nginx/default.conf:/etc/nginx/conf.d/default.conf
     environment: 
       - NGINX_HOST=
       - NGINX_PORT=80
