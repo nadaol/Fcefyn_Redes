@@ -1,0 +1,112 @@
+version: '3.1'
+
+services:
+
+  r1:
+    build:
+      dockerfile: images/router.dockerfile
+      context: .
+    volumes:
+      - ./config/quagga/r1/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./config/quagga/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine_quagga:1.0
+    container_name: r1
+    privileged: true
+    ports:
+      #admin
+      - 10011:2601
+    networks:
+      dot_edu:
+        ipv4_address: 10.0.0.2
+      dot_com:
+        ipv4_address: 20.0.0.2
+
+  prim_edu:
+    build: 
+      dockerfile: images/dns.dockerfile
+      context: .
+    container_name: prim_edu
+    volumes:
+      - ./config/bind9/prim_edu/:/etc/bind:ro
+    ports:
+      - "56:53/tcp"
+    networks:
+      dot_edu:
+        ipv4_address: 10.0.0.3
+
+  sec_edu:
+    build: 
+      dockerfile: images/dns.dockerfile
+      context: .
+    container_name: sec_edu
+    volumes:
+      - ./config/bind9/prim_edu/:/etc/bind:ro
+    ports:
+      - "54:53/tcp"
+    networks:
+      dot_edu:
+        ipv4_address: 10.0.0.4
+    
+  prim_com:
+    build: 
+      dockerfile: images/dns.dockerfile
+      context: .
+    container_name: prim_com
+    volumes:
+      - ./config/bind9/prim_com/:/etc/bind:ro
+    ports:
+      - "55:53/tcp"
+    networks:
+      dot_com:
+        ipv4_address: 20.0.0.3
+  
+  host1: 
+    build:
+      dockerfile: images/host.dockerfile
+      context: .
+    container_name: h1
+    volumes: 
+      - ./config/hosts/h1/resolv.conf:/etc/resolv.conf:ro
+    command: tail -f /dev/null
+    networks:
+      dot_edu:
+        ipv4_address: 10.0.0.5
+
+  host2: 
+    build:
+      dockerfile: images/host.dockerfile
+      context: .
+    container_name: h2
+    volumes: 
+      - ./config/hosts/h2/resolv.conf:/etc/resolv.conf:ro
+    command: tail -f /dev/null
+    networks:
+      dot_edu:
+        ipv4_address: 10.0.0.6
+
+  host3: 
+    build:
+      dockerfile: images/host.dockerfile
+      context: .
+    container_name: h3
+    volumes: 
+      - ./config/hosts/h3/resolv.conf:/etc/resolv.conf:ro
+    command: tail -f /dev/null
+    networks:
+      dot_com:
+        ipv4_address: 20.0.0.4
+
+networks:
+  dot_edu:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 10.0.0.0/24
+
+  dot_com:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: 20.0.0.0/24
