@@ -20,6 +20,8 @@ services:
         ipv4_address: 10.0.0.2
       dot_com:
         ipv4_address: 20.0.0.2
+      dot:
+        ipv4_address: 30.0.0.2
 
   prim_edu:
     build: 
@@ -29,7 +31,7 @@ services:
     volumes:
       - ./config/bind9/prim_edu/:/etc/bind:ro
     ports:
-      - "56:53/tcp"
+      - "100:53/tcp"
     networks:
       dot_edu:
         ipv4_address: 10.0.0.3
@@ -42,7 +44,7 @@ services:
     volumes:
       - ./config/bind9/prim_edu/:/etc/bind:ro
     ports:
-      - "54:53/tcp"
+      - "101:53/tcp"
     networks:
       dot_edu:
         ipv4_address: 10.0.0.4
@@ -55,10 +57,23 @@ services:
     volumes:
       - ./config/bind9/prim_com/:/etc/bind:ro
     ports:
-      - "55:53/tcp"
+      - "102:53/tcp"
     networks:
       dot_com:
         ipv4_address: 20.0.0.3
+
+  root:
+    build: 
+      dockerfile: images/dns.dockerfile
+      context: .
+    container_name: root
+    volumes:
+      - ./config/bind9/root/:/etc/bind:ro
+    ports:
+      - "103:53/tcp"
+    networks:
+      dot:
+        ipv4_address: 30.0.0.3
   
   host1: 
     build:
@@ -109,4 +124,11 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 20.0.0.0/24
+      - subnet: 20.0.0.0/24
+    
+  dot:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+      - subnet: 30.0.0.0/24

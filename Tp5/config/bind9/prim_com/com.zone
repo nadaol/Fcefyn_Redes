@@ -3,7 +3,7 @@ $TTL 1h
 ; SOA for .edu
 ; -----------------------------------------------------------------------------
 
-@ IN SOA ns1.com admin.edu. (
+@ IN SOA ns1.com admin.com. (
             2020051202      ; Serial
             1h              ; Refresh
             15m             ; Retry
