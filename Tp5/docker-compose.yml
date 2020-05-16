@@ -82,6 +82,7 @@ services:
     container_name: h1
     volumes: 
       - ./config/hosts/h1/resolv.conf:/etc/resolv.conf:ro
+      - ./config/hosts/h1/dnsmasq.conf:/etc/dnsmasq.conf:ro
     command: tail -f /dev/null
     networks:
       dot_edu:
@@ -94,6 +95,7 @@ services:
     container_name: h2
     volumes: 
       - ./config/hosts/h2/resolv.conf:/etc/resolv.conf:ro
+      - ./config/hosts/h2/dnsmasq.conf:/etc/dnsmasq.conf:ro
     command: tail -f /dev/null
     networks:
       dot_edu:
@@ -106,6 +108,7 @@ services:
     container_name: h3
     volumes: 
       - ./config/hosts/h3/resolv.conf:/etc/resolv.conf:ro
+      - ./config/hosts/h3/dnsmasq.conf:/etc/dnsmasq.conf:ro
     command: tail -f /dev/null
     networks:
       dot_com:
