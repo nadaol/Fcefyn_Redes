@@ -1,2 +1,0 @@
-.           3600000     IN      NS      ns.root
-ns.root     3600000     IN      A       30.0.0.3
