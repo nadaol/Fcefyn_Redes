@@ -8,9 +8,7 @@ sudo docker exec -ti --privileged h1 ip route add default via 10.0.0.2
 #WebServer
 sudo docker exec -ti --privileged ws ip route del default
 sudo docker exec -ti --privileged ws ip route add default via 10.0.0.2
-#RunApp
-sudo docker exec -ti --privileged ws cd app
-sudo docker exec -ti --privileged ws python ./app.py &
+sudo docker exec ws python ./app.py &
 
 #H3
 sudo docker exec -ti --privileged h3 ip route del default

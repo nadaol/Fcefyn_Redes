@@ -95,9 +95,9 @@ services:
     volumes: 
       - ./config/hosts/ws/resolv.conf:/etc/resolv.conf:ro
       - ./config/hosts/ws/dnsmasq.conf:/etc/dnsmasq.conf:ro
-      - ./config/hosts/ws/www/:/app
+      - ./config/hosts/ws/www/app.py:/app.py
     ports:
-      - "8080:5000"
+      - "5000:5000"
     container_name: ws
     command: tail -f /dev/null
     networks:
