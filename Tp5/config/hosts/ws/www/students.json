@@ -1,0 +1,7 @@
+{
+    "Alumnos":[
+    {"Id": 1,"Nombre":"Nicolas", "Apellido":"Giardino", "Matricula":"33344455"},
+    {"Id": 2,"Nombre":"Ramiro", "Apellido":"Amoros", "Matricula":"33445566"},
+    {"Id": 3,"Nombre":"Sofia", "Apellido":"Colombraro", "Matricula":"34567890"},
+    {"Id": 4,"Nombre":"Marcos", "Apellido":"Wolfgang", "Matricula":"32109876"}
+ ]}
