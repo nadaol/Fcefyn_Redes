@@ -97,7 +97,7 @@ services:
       - ./config/hosts/ws/dnsmasq.conf:/etc/dnsmasq.conf:ro
       - ./config/hosts/ws/www/app.py:/app.py
     ports:
-      - "5000:5000"
+      - "60000:60000"
     container_name: ws
     command: tail -f /dev/null
     networks:

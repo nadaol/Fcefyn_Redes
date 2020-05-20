@@ -68,4 +68,4 @@ def del_student():
     else:
         return "Error : No Id specified"
 
-app.run(host='0.0.0.0',port='5000',debug=True)
+app.run(host='0.0.0.0',port='60000',debug=True)
