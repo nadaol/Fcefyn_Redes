@@ -2,10 +2,9 @@
 ### Grupo 13
 #### Jose Cancinos - Oliva Nahuel
 
+[TP6 : Sistemas distribuidos complejos, proxy](https://docs.google.com/document/d/16NeKU_CoKs3UF281r9wK-Ip2rGNeNdUP15N639m64TI/edit)
 
-[TP1 : Análisis de tráfico IPv6 en capa 3](https://docs.google.com/document/d/1ln7_DWUMLQKvuvY7Q5fjTcDxVUodmx2pQ6y1e6xSaf4/edit) 
-
-[TP2 : Ruteo interno dinámico](https://docs.google.com/document/d/1F-jKZmA54TQOktdrUVDynVTxrbcDbW8cNPSADIf5LjU/edit)
+[Clase](https://drive.google.com/file/d/1OLsU48V76fb57wIGOHq1uRkFp3LkAtIt/view)
 
 <a href="https://docs.google.com/document/d/1OrTF1JmSYKYR8QrADXPNAeeiF7q8jBnrOyADIlgl49k/edit" target="_blank">TP 3: Ruteo externo dinámico</a>
 
