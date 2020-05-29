@@ -88,14 +88,17 @@ services:
       dot_edu:
         ipv4_address: 10.0.0.5
 
-  host2: 
+  ws: 
     build:
-      dockerfile: images/host.dockerfile
+      dockerfile: images/ws.dockerfile
       context: .
-    container_name: h2
     volumes: 
-      - ./config/hosts/h2/resolv.conf:/etc/resolv.conf:ro
-      - ./config/hosts/h2/dnsmasq.conf:/etc/dnsmasq.conf:ro
+      - ./config/hosts/ws/resolv.conf:/etc/resolv.conf:ro
+      - ./config/hosts/ws/dnsmasq.conf:/etc/dnsmasq.conf:ro
+      - ./config/hosts/ws/www/app.py:/app.py
+    ports:
+      - "60000:60000"
+    container_name: ws
     command: tail -f /dev/null
     networks:
       dot_edu:
