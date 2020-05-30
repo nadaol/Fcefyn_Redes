@@ -1,0 +1,83 @@
+version: '2.1'
+
+services:
+
+  r1:
+    build:
+      dockerfile: images/router.dockerfile
+      context: .
+    volumes:
+      - ./config/quagga/r1/zebra.conf:/etc/quagga/zebra.conf:ro
+      - ./config/quagga/supervisord.conf:/etc/supervisord.conf:ro
+    image: alpine_quagga:1.0
+    container_name: r1
+    privileged: true
+    ports:
+      #admin
+      - 10011:2601
+    networks:
+      clients_net:
+        ipv4_address: 20.0.0.2
+        ipv6_address: 20::2
+      dns_net:
+        ipv4_address: 30.0.0.2
+        ipv6_address: 30::2
+
+  prim_com:
+    build: 
+      dockerfile: images/dns.dockerfile
+      context: .
+    container_name: prim_com
+    volumes:
+      - ./config/bind9/prim_com/:/etc/bind:ro
+    ports:
+      - "100:53/tcp"
+    networks:
+      dns_net:
+        ipv4_address: 30.0.0.3
+        ipv6_address: 30::3
+
+  host1: 
+    build:
+      dockerfile: images/host.dockerfile
+      context: .
+    container_name: h1
+    volumes: 
+      - ./config/hosts/h1/resolv.conf:/etc/resolv.conf:ro
+    command: tail -f /dev/null
+    networks:
+      clients_net:
+        ipv4_address: 20.0.0.3
+        ipv6_address: 20::3
+
+  host2: 
+    build:
+      dockerfile: images/host.dockerfile
+      context: .
+    container_name: h2
+    volumes: 
+      - ./config/hosts/h2/resolv.conf:/etc/resolv.conf:ro
+    command: tail -f /dev/null
+    networks:
+      clients_net:
+        ipv4_address: 20.0.0.4
+        ipv6_address: 20::4
+
+networks:
+  clients_net:
+    driver: "bridge"
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+      - subnet: 20.0.0.0/8
+      - subnet: 20::/64
+    
+  dns_net:
+    driver: "bridge"
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+      - subnet: 30.0.0.0/28
+      - subnet: 30::/120
