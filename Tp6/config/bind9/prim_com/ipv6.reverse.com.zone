@@ -1,0 +1,20 @@
+$TTL 1h	; Default TTL
+@	IN	SOA	ns1.com.	admin.com. (
+	2020053101	; serial
+	1h		; slave refresh interval
+	15m		; slave retry interval
+	1w		; slave copy expire time
+	1h		; NXDOMAIN cache time
+	)
+
+;
+; domain name servers
+;
+@	IN	NS	ns1.com.
+
+
+; IPv6 PTR entries
+3.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.3.0.0.ip6.arpa.    IN    PTR    ns1.com.
+3.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.1.0.0.0.0.3.0.0.ip6.arpa.    IN    PTR    pc1.com.
+4.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.1.0.0.0.0.3.0.0.ip6.arpa.    IN    PTR    pc2.com.
+3.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.2.0.0.0.0.3.0.0.ip6.arpa.    IN    PTR    server.com.
