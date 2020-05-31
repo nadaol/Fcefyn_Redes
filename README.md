@@ -10,4 +10,4 @@
 
 [Clase practico Kubernetes](https://drive.google.com/file/d/16TxCBfnlbgV34N8RicR5fC1msYwoTIml/view)
 
-<img src="https://raw.githubusercontent.com/nadaol/Fcefyn_Redes/master/Tp6/docs/topologia.jpg?token=ALWUAXSTR2DS5IMBK3NOP5C63RPAS" alt="topology" width="800">
+<img src="https://raw.githubusercontent.com/nadaol/Fcefyn_Redes/master/Tp6/docs/topologia.jpg?token=ALWUAXSTR2DS5IMBK3NOP5C63RPAS" alt="topology" width="1000">
