@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strapi-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi-pods
+  template:
+    metadata:
+      labels:
+        app: strapi-pods
+    spec:
+      containers:
+      - name: strapi
+        image: strapi/strapi
+        imagePullPolicy: IfNotPresent        
+        ports:
+        - containerPort: 1337
+        env:
+        - name: DATABASE_USERNAME
+          value: "strapi"
+        - name: DATABASE_PASSWORD
+          value: "strapi"
+        - name: DATABASE_CLIENT
+          value: "mongo"
+        - name: DATABASE_NAME
+          value: "strapi"
+        - name: DATABASE_HOST
+          value: "mongo"
+        - name: DATABASE_PORT
+          value: "27017"
+---
+apiVersion: v1      
+kind: Service
+metadata:
+  name: strapi-svc
+spec:
+  selector:
+    app: strapi-pods
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 1337
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-pods
+  template:
+    metadata:
+      labels:
+        app: mongo-pods
+    spec:
+      containers:
+      - name: mongo-cont
+        image: mongo
+        imagePullPolicy: IfNotPresent        
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: "strapi"
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: "strapi"       
+---    
+apiVersion: v1      
+kind: Service
+metadata:
+  name: mongo-svc
+spec:
+  selector:
+    app: mongo-pods
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 27017
+---
