@@ -28,7 +28,7 @@ spec:
         - name: DATABASE_NAME
           value: "strapi"
         - name: DATABASE_HOST
-          value: "mongo"
+          value: "mongo-svc"
         - name: DATABASE_PORT
           value: "27017"
 ---
@@ -41,7 +41,7 @@ spec:
     app: strapi-pods
   ports:
   - protocol: TCP
-    port: 80
+    port: 1337
     targetPort: 1337
 ---
 apiVersion: apps/v1
@@ -79,6 +79,6 @@ spec:
     app: mongo-pods
   ports:
   - protocol: TCP
-    port: 80
+    port: 27017
     targetPort: 27017
 ---
