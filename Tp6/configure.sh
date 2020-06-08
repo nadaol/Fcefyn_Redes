@@ -7,7 +7,7 @@ sudo docker exec -ti --privileged h1 ip route add default via 30.1.0.2
 sudo docker exec -ti --privileged h1 ip -6 route del default
 sudo docker exec -ti --privileged h1 ip -6 route add default via 30:1::2
 
-#H3
+#H2
 sudo docker exec -ti --privileged h2 ip route del default
 sudo docker exec -ti --privileged h2 ip route add default via 30.1.0.2
 sudo docker exec -ti --privileged h2 ip -6 route del default
@@ -20,8 +20,8 @@ sudo docker exec -ti --privileged prim_com ip -6 route del default
 sudo docker exec -ti --privileged prim_com ip -6 route add default via 30::2
 
 #R1
-sudo docker exec -ti --privileged r1 ip -6 route del default
-sudo docker exec -ti --privileged r1 ip route del default
-#sudo docker exec -ti --privileged r1 ip route add default via 30.0.0.3
+#sudo docker exec -ti --privileged r1 ip -6 route del default
+#sudo docker exec -ti --privileged r1 ip route del default
+#sudo docker exec -ti --privileged r1 ip del 192.168.56.0/24
 
 exit

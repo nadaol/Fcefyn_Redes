@@ -10,7 +10,7 @@ LABEL maintainer.name="Nahuel Oliva - Cancinos Jose" \
       description="Quagga OSPF - apline based image"
 
 RUN apk update
-RUN apk add supervisor quagga heimdal tcpdump
+RUN apk add supervisor quagga heimdal tcpdump curl
 
 RUN echo "zebra=yes" >> /etc/quagga/daemons
 
