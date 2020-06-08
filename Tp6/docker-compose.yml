@@ -16,13 +16,15 @@ services:
       #admin
       - 10011:2601
     networks:
+      cluster_net:
+        ipv4_address: 30.2.0.2
+        ipv6_address: 30:2::2
       clients_net:
         ipv4_address: 30.1.0.2
         ipv6_address: 30:1::2
       dns_net:
         ipv4_address: 30.0.0.2
         ipv6_address: 30::2
-      vboxnet0:
 
   prim_com:
     build: 
@@ -65,6 +67,16 @@ services:
         ipv6_address: 30:1::4
 
 networks:
+
+  cluster_net:
+    driver: "bridge"
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+      - subnet: 30.2.0.0/24
+      - subnet: 30:2::/64
+
   clients_net:
     driver: "bridge"
     enable_ipv6: true
@@ -82,12 +94,3 @@ networks:
       config:
       - subnet: 30.0.0.0/24
       - subnet: 30::/64
-
-  vboxnet0:
-    driver: macvlan
-    driver_opts:
-      parent: vboxnet0
-    ipam:
-      config:
-        - subnet: "192.168.56.0/24"
-          gateway: "192.168.56.1"
