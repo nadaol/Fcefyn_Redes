@@ -84,7 +84,6 @@ networks:
       - subnet: 30::/64
 
   vboxnet0:
-    external: true
     driver: macvlan
     driver_opts:
       parent: vboxnet0
