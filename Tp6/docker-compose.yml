@@ -16,15 +16,14 @@ services:
       #admin
       - 10011:2601
     networks:
-      cluster_net:
-        ipv4_address: 30.2.0.2
-        ipv6_address: 30:2::2
       clients_net:
         ipv4_address: 30.1.0.2
         ipv6_address: 30:1::2
       dns_net:
         ipv4_address: 30.0.0.2
         ipv6_address: 30::2
+      vboxnet:
+        ipv4_address: 30.3.0.150
 
   prim_com:
     build: 
@@ -67,16 +66,6 @@ services:
         ipv6_address: 30:1::4
 
 networks:
-
-  cluster_net:
-    driver: "bridge"
-    enable_ipv6: true
-    ipam:
-      driver: default
-      config:
-      - subnet: 30.2.0.0/24
-      - subnet: 30:2::/64
-
   clients_net:
     driver: "bridge"
     enable_ipv6: true
@@ -94,3 +83,10 @@ networks:
       config:
       - subnet: 30.0.0.0/24
       - subnet: 30::/64
+
+  vboxnet:
+    driver: "bridge"
+    ipam:
+      driver: default
+      config:
+        - subnet: "30.3.0.0/24"
