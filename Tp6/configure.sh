@@ -24,10 +24,11 @@ echo 'prim_com configured Ok'
 #R1
 sudo docker exec -ti --privileged r1 ip -6 route del default
 sudo docker exec -ti --privileged r1 ip route del default
-sudo docker exec -ti --privileged r1 ip route add default via 30.3.0.150
-#sudo docker exec -ti --privileged r1 ip -6 route add default via 30:3::150
+sudo docker exec -ti --privileged r1 ip route add default via 40.0.0.6
+#sudo docker exec -ti --privileged r1 ip -6 route add default via 40:0:0:6
 echo 'r1 configured Ok'
 
 #sudo brctl addif br-00154d8b855d enp0s8
+#curl https://40.0.0.5 -H "host:strapi.server.com" -k
 
 exit

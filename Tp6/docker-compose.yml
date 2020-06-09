@@ -23,7 +23,7 @@ services:
         ipv4_address: 30.0.0.2
         ipv6_address: 30::2
       vboxnet:
-        ipv4_address: 30.3.0.150
+        ipv4_address: 40.0.0.6
 
   prim_com:
     build: 
@@ -89,4 +89,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: "30.3.0.0/24"
+        - subnet: "40.0.0.0/24"

@@ -10,5 +10,5 @@ LABEL maintainer.name="Natasha Tomattis" \
       description="Host ejemplo para redes de computadoras"
 
 RUN apk --update upgrade && \
-    apk add --update vim tcpdump bind-tools dnsmasq && \
+    apk add --update vim tcpdump bind-tools dnsmasq curl && \
     rm -rf /var/cache/apk/*
