@@ -24,6 +24,7 @@ services:
         ipv6_address: 30::2
       vboxnet:
         ipv4_address: 40.0.0.6
+        ipv6_address: fd17:625c:f037::10
 
   prim_com:
     build: 
@@ -46,6 +47,7 @@ services:
     container_name: h1
     volumes: 
       - ./config/hosts/h1/resolv.conf:/etc/resolv.conf:ro
+      - ./config/hosts/home/server-com.pem:/home/server-com.pem
     command: tail -f /dev/null
     networks:
       clients_net:
@@ -59,6 +61,7 @@ services:
     container_name: h2
     volumes: 
       - ./config/hosts/h2/resolv.conf:/etc/resolv.conf:ro
+      - ./config/hosts/home/server-com.pem:/home/server-com.pem
     command: tail -f /dev/null
     networks:
       clients_net:
@@ -86,7 +89,9 @@ networks:
 
   vboxnet:
     driver: "bridge"
+    enable_ipv6: true
     ipam:
       driver: default
       config:
         - subnet: "40.0.0.0/24"
+        - subnet: "fd17:625c:f037::/64"
