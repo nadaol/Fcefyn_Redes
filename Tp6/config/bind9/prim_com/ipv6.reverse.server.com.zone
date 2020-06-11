@@ -1,0 +1,15 @@
+$TTL 1h	; Default TTL
+@	IN	SOA	ns1.com.	admin.com. (
+	2020053101	; serial
+	1h		; slave refresh interval
+	15m		; slave retry interval
+	1w		; slave copy expire time
+	1h		; NXDOMAIN cache time
+	)
+
+;
+; domain name servers
+;
+@	IN	NS	ns1.com.
+
+e.8.5.5.2.2.8.0.6.a.d.f.b.c.7.7.0.0.0.0.7.3.0.f.c.5.2.6.7.1.d.f.ip6.arpa.    IN    PTR	  server.com.

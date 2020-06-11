@@ -12,8 +12,4 @@ $TTL 1h
 
 @              IN      NS      ns1.com.
 
-3.0.0.30.in-addr.arpa.      IN      PTR     ns1.com.
-3.0.1.30.in-addr.arpa.      IN      PTR     pc1.com.
-4.0.1.30.in-addr.arpa.      IN      PTR     pc2.com.
-
-
+5.0.0.40.in-addr.arpa.      IN      PTR     server.com.

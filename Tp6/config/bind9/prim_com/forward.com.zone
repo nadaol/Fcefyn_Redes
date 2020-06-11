@@ -2,7 +2,6 @@ $TTL 1h
 ; -----------------------------------------------------------------------------
 ; SOA for .com
 ; -----------------------------------------------------------------------------
-
 @ IN SOA ns1.com admin.com. (
             2020053002      ; Serial
             1h              ; Refresh
@@ -19,12 +18,12 @@ $TTL 1h
 ; pointer records
 ; -----------------------------------------------------------------------------
 
-ns1.com.                 1800    IN    A         30.0.0.3
-ns1.com.                 1800    IN    AAAA      30::3
+ns1.com.                1800    IN    A         30.0.0.3
+ns1.com.                1800    IN    AAAA      30::3
 pc1.com.                1800    IN    A         30.1.0.3
-pc1.com.                  1800    IN    AAAA      30:1::3
-pc2.com.                 1800    IN    A         30.1.0.4
-pc2.com.                 1800    IN    AAAA      30:1::4
-server.com.                 1800    IN    A         40.0.0.5
-server.com.                 1800    IN    AAAA      fd17:625c:f037:0:77cb:fda6:822:558e
+pc1.com.                1800    IN    AAAA      30:1::3
+pc2.com.                1800    IN    A         30.1.0.4
+pc2.com.                1800    IN    AAAA      30:1::4
+server.com.             1800    IN    A         40.0.0.5
+server.com.             1800    IN    AAAA      fd17:625c:f037:0:77cb:fda6:822:558e
 
