@@ -28,18 +28,20 @@ sudo docker exec -ti --privileged r1 ip route add default via 40.0.0.6
 #sudo docker exec -ti --privileged r1 ip -6 route add default via fd17:625c:f037::10
 echo 'r1 configured Ok'
 
-#en vm2
-#sudo brctl addif br-00154d8b855d enp0s8
-#sudo ip route del 30.0.0.0/24
-#sudo ip route del 30.1.0.0/24
-#sudo ip route add 30.0.0.0/8 via 40.0.0.6 (redes docker -> interfaz router)
-#sudo ip route del 30:1::/64
-#sudo ip route del 30::/64
-#sudo ip -6 route add 30::/16 via fd17:625c:f037::10
+#en vm2 cada vez que levante docker
+#sudo brctl addif br-<bridge router<->cluster-net> enp0s8
+sudo ip route del 30.0.0.0/24
+sudo ip route del 30.1.0.0/24
+sudo ip route add 30.0.0.0/8 via 40.0.0.6 #(redes docker -> interfaz router)
+sudo ip route del 30:1::/64
+sudo ip route del 30::/64
+sudo ip -6 route add 30::/16 via fd17:625c:f037::10
 
-#agregar en vm_cluster
+#agregar en vm_cluster una unica vez
 #sudo ip route add 30.0.0.0/8 via 40.0.0.6
 #sudo ip -6 route add 30::/16 via fd17:625c:f037::10
+
+#Comandos Utiles
 
 #registrar usuario
 #curl --cacert /home/server-com.pem -X POST https://server.com/auth/local/register -H 'Content-Type: application/json' -d '{"username":"user3","email":"user3@gmail.com","password":"123456"}'
