@@ -2,7 +2,7 @@
 ### Grupo 13
 #### Jose Cancinos - Oliva Nahuel
 
-[Sistemas distribuidos : Kubernetes](https://docs.google.com/document/d/16NeKU_CoKs3UF281r9wK-Ip2rGNeNdUP15N639m64TI/edit)
+[Sistemas distribuidos : Kubernetes](https://drive.google.com/file/d/1DVJmtJdL60JY1OJpSpl5l6xpVlX1-rv2/view?usp=sharing)
 
 ![alt-text-2](Tp6/docs/topologia.jpg )
 
