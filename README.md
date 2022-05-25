@@ -2,12 +2,16 @@
 ### Grupo 13
 #### Jose Cancinos - Oliva Nahuel
 
-[TP6 : Sistemas distribuidos complejos, proxy](https://docs.google.com/document/d/16NeKU_CoKs3UF281r9wK-Ip2rGNeNdUP15N639m64TI/edit)
+[Sistemas distribuidos : Kubernetes](https://docs.google.com/document/d/16NeKU_CoKs3UF281r9wK-Ip2rGNeNdUP15N639m64TI/edit)
 
-[Clase Kubernetes](https://drive.google.com/file/d/1OLsU48V76fb57wIGOHq1uRkFp3LkAtIt/view)
+![alt-text-2](Tp6/docs/topologia.jpg )
 
-[Clase https,proxy,tp6](https://drive.google.com/file/d/1uM8s4Udbtd6I5ZTPqH7HwlzFUwhkySLo/view)
+[Ruteo Dinámico](https://drive.google.com/file/d/1TtFX4EZq7v9VoGlEH1gK50vEGf5gFcP0/view?usp=sharing)
 
-[Clase practico Kubernetes](https://drive.google.com/file/d/16TxCBfnlbgV34N8RicR5fC1msYwoTIml/view)
+[Análisis ipv6](https://drive.google.com/file/d/1FRprcBNHga8naYOsilHNT2bt-zuSuLI7/view?usp=sharing)
 
-<img src="https://raw.githubusercontent.com/nadaol/Fcefyn_Redes/master/Tp6/docs/topologia.jpg?token=ALWUAXSTR2DS5IMBK3NOP5C63RPAS" alt="topology" width="1200">
+[Layer 4](https://drive.google.com/file/d/1TstGS4O5duYOg8Y6P9wRF77L9rhcccHo/view?usp=sharing)
+
+[Layer 5](https://drive.google.com/file/d/1Z1qJmW6XIYj0UkJrYPFhVgQxKIx5FVol/view?usp=sharing)
+
+[Kubernetes](https://drive.google.com/file/d/1OLsU48V76fb57wIGOHq1uRkFp3LkAtIt/view)
